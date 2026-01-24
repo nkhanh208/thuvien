@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Thư Viện High-Tech</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=JetBrains+Mono:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -13,6 +13,7 @@
                     fontFamily: {
                         sans: ['Outfit', 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
+                        digital: ['Share Tech Mono', 'monospace'],
                     },
                     colors: {
                         dark: '#0B1120',
@@ -59,6 +60,30 @@
             box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
         }
 
+        /* Đồng hồ High-Tech UI */
+        .tech-clock-frame {
+            position: relative;
+            padding: 1rem 1.5rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .tech-clock-frame::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(6, 182, 212, 0.03) 1px, rgba(6, 182, 212, 0.03) 2px);
+            pointer-events: none;
+        }
+        .corner-bracket {
+            position: absolute; width: 10px; height: 10px; border-color: #06b6d4; border-style: solid;
+        }
+        .cb-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+        .cb-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+        .cb-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+        .cb-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
         .donut-chart {
             width: 180px;
             height: 180px;
@@ -88,7 +113,6 @@
             z-index: 10;
         }
 
-        /* Loading animation */
         .loading-pulse {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
@@ -101,7 +125,7 @@
 <body class="p-6 min-h-screen">
 
     <!-- Header -->
-    <div class="flex justify-between items-end mb-8 border-b border-white/10 pb-4">
+    <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-6">
         <div>
             <div class="flex items-center gap-2 mb-1">
                 <span class="relative flex h-3 w-3">
@@ -113,22 +137,23 @@
             <h1 class="text-3xl font-bold text-white tracking-tight">THƯ VIỆN SỐ <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonBlue to-neonPurple">DASHBOARD</span></h1>
         </div>
         
-        <!-- Khu vực Đồng hồ & Trạng thái -->
+        <!-- Đồng hồ High-Tech mới -->
         <div class="text-right hidden md:block">
-            <!-- ĐỒNG HỒ THỜI GIAN THỰC -->
-            <div id="realtime-clock" class="text-4xl font-mono font-bold text-white mb-1 tracking-widest drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">--:--:--</div>
-            
-            <div class="flex items-center justify-end gap-3 text-xs text-slate-400 font-mono">
-                <span>AUTO-REFRESH: <span id="countdown" class="text-neonBlue font-bold">5</span>s</span>
-                <span class="text-slate-600">|</span>
-                <span>DATA: <span id="last-update" class="text-slate-300">--:--:--</span></span>
+            <div class="tech-clock-frame">
+                <div class="corner-bracket cb-tl"></div>
+                <div class="corner-bracket cb-tr"></div>
+                <div class="corner-bracket cb-bl"></div>
+                <div class="corner-bracket cb-br"></div>
+                
+                <div class="text-[10px] text-neonBlue/50 font-mono tracking-widest uppercase mb-1">System Time / UTC+7</div>
+                <div id="realtime-clock" class="text-5xl font-digital text-neonBlue tracking-widest drop-shadow-[0_0_10px_rgba(6,182,212,0.5)] leading-none">--:--:--</div>
+                <div id="realtime-date" class="text-[11px] text-slate-500 font-mono mt-2 tracking-widest border-t border-white/5 pt-1 uppercase">--/--/----</div>
             </div>
         </div>
     </div>
 
-    <!-- 1. SCORECARDS (THẺ SỐ LIỆU) -->
+    <!-- 1. SCORECARDS -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <!-- Card 1: Tổng -->
         <div id="card-total" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:border-neonBlue/30 transition-all duration-300">
             <div class="absolute top-0 right-0 p-4 opacity-10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-neonBlue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
@@ -138,7 +163,6 @@
             <div class="text-neonGreen text-xs mt-2 flex items-center font-mono">Live Data</div>
         </div>
 
-        <!-- Card 2: Đang mượn -->
         <div id="card-active" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:border-amber-500/30 transition-all duration-300">
             <div class="absolute top-0 right-0 p-4 opacity-10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
@@ -148,7 +172,6 @@
             <div class="text-amber-400 text-xs mt-2 font-mono">● Đang lưu hành</div>
         </div>
 
-        <!-- Card 3: Đã trả -->
         <div id="card-returned" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:border-neonGreen/30 transition-all duration-300">
             <div class="absolute top-0 right-0 p-4 opacity-10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-neonGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -158,7 +181,6 @@
             <div id="percent-returned" class="text-neonGreen text-xs mt-2 font-mono">--% Hoàn thành</div>
         </div>
 
-        <!-- Card 4: Quá hạn -->
         <div id="card-overdue" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:border-neonRed/30 transition-all duration-300">
              <div class="absolute -inset-0.5 bg-gradient-to-r from-neonRed to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
             <div class="relative h-full flex flex-col justify-center">
@@ -174,24 +196,19 @@
 
     <!-- 2. CHARTS AREA -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <!-- BAR CHART -->
         <div class="glass-panel p-6 rounded-2xl md:col-span-2">
             <div class="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
                 <h2 class="text-lg font-bold text-white flex items-center">
                     <span class="w-1 h-6 bg-neonBlue mr-3 rounded-full shadow-[0_0_10px_#06b6d4]"></span>
                     TOP 5 SÁCH HOT 🔥
                 </h2>
-                <span class="text-xs font-mono text-slate-500 bg-slate-800 px-2 py-1 rounded border border-white/5">AUTO SYNC</span>
+                <span class="text-xs font-mono text-slate-500 bg-slate-800 px-2 py-1 rounded border border-white/5 uppercase">Auto Syncing</span>
             </div>
-            
             <div id="top-books-container" class="space-y-5">
-                <!-- Dữ liệu sẽ được chèn tự động vào đây -->
                 <div class="text-center text-slate-500 py-10 loading-pulse">Đang tải dữ liệu...</div>
             </div>
         </div>
 
-        <!-- DONUT CHART -->
         <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-between">
             <div class="w-full border-b border-white/5 pb-4 mb-4">
                 <h2 class="text-lg font-bold text-white flex items-center">
@@ -199,14 +216,12 @@
                     TRẠNG THÁI
                 </h2>
             </div>
-            
             <div id="donut-chart-viz" class="donut-chart mb-4">
                 <div class="donut-hole border border-white/10">
                     <span id="donut-total" class="text-4xl font-bold text-white font-mono">---</span>
                     <span class="text-[10px] text-slate-400 uppercase tracking-widest mt-1">Total Files</span>
                 </div>
             </div>
-
             <div class="w-full space-y-3 mt-2">
                 <div class="flex items-center justify-between p-2 rounded hover:bg-white/5 transition">
                     <div class="flex items-center">
@@ -233,45 +248,30 @@
         </div>
     </div>
 
-    <!-- SCRIPT ĐỂ LẤY DỮ LIỆU TỪ GOOGLE SHEETS -->
     <script>
         // --- CẤU HÌNH ---
-        // ID FILE BẢN SAO: 1D0H2qnZmc7yw_yVbwlPOQbKqqr0Q_DMGynxDh8jV0SU
         const SHEET_ID = '1D0H2qnZmc7yw_yVbwlPOQbKqqr0Q_DMGynxDh8jV0SU'; 
-        
-        // ⚠️ CẬP NHẬT MỚI: ID SHEET "THONG KE" (Lấy từ link bạn vừa gửi)
         const SHEET_GID = '1461881900'; 
-        
-        // Dùng phương thức CSV export để vượt qua các lỗi CORS và bảo mật
-        // URL này sẽ chỉ hoạt động nếu bạn đã Công bố (Publish) sheet có GID trên
         const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
+
+        // Biến đếm ngược chạy ngầm
+        let countdown = 5;
 
         async function fetchData() {
             try {
-                // Thêm tham số ngẫu nhiên để tránh Cache
                 const noCacheURL = `${URL}&_=${new Date().getTime()}`;
-                
                 const response = await fetch(noCacheURL);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP Error: ${response.status}`);
-                }
-
+                if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
                 const text = await response.text();
-                
-                // Parse CSV thủ công
                 const rows = parseCSV(text);
 
-                // --- XỬ LÝ DỮ LIỆU ---
-                // Kiểm tra xem bảng có dữ liệu không
-                if (rows.length < 2) throw new Error("Bảng tính chưa có dữ liệu. Vui lòng kiểm tra lại file.");
+                if (rows.length < 2) throw new Error("Bảng tính chưa có dữ liệu.");
 
-                // Lấy dữ liệu dòng 2 (index 1) - Dòng chứa Tổng số
                 const dataRow = rows[1];
-                const total = parseInt(dataRow[0]) || 0;     // Cột A
-                const active = parseInt(dataRow[1]) || 0;    // Cột B
-                const returned = parseInt(dataRow[2]) || 0;  // Cột C
-                const overdue = parseInt(dataRow[3]) || 0;   // Cột D
+                const total = parseInt(dataRow[0]) || 0;
+                const active = parseInt(dataRow[1]) || 0;
+                const returned = parseInt(dataRow[2]) || 0;
+                const overdue = parseInt(dataRow[3]) || 0;
 
                 updateValueWithFlash('card-total', 'val-total', total);
                 updateValueWithFlash('card-active', 'val-active', active);
@@ -280,7 +280,6 @@
                 
                 document.getElementById('donut-total').innerText = total;
 
-                // Tính phần trăm
                 const pctReturned = total > 0 ? Math.round((returned / total) * 100) : 0;
                 const pctActive = total > 0 ? Math.round((active / total) * 100) : 0;
                 const pctOverdue = total > 0 ? Math.round((overdue / total) * 100) : 0;
@@ -290,123 +289,69 @@
                 document.getElementById('donut-percent-active').innerText = `${pctActive}%`;
                 document.getElementById('donut-percent-overdue').innerText = `${pctOverdue}%`;
 
-                // Cập nhật biểu đồ Donut
                 const degReturned = pctReturned; 
                 const degActive = pctReturned + pctActive;
-                
-                const donutViz = document.getElementById('donut-chart-viz');
-                donutViz.style.background = `conic-gradient(
-                    #10b981 0% ${degReturned}%, 
-                    #f59e0b ${degReturned}% ${degActive}%, 
-                    #f43f5e ${degActive}% 100%
-                )`;
+                document.getElementById('donut-chart-viz').style.background = `conic-gradient(#10b981 0% ${degReturned}%, #f59e0b ${degReturned}% ${degActive}%, #f43f5e ${degActive}% 100%)`;
 
-                // --- XỬ LÝ TOP SÁCH ---
-                // Sách nằm từ cột E (index 4) và F (index 5)
-                // Cần lọc bỏ dòng tiêu đề (nếu có) và dòng trống
                 const bookContainer = document.getElementById('top-books-container');
                 bookContainer.innerHTML = ''; 
-
-                // Bước 1: Lọc lấy dữ liệu sách hợp lệ
                 const validBooks = [];
-                // Quét từ dòng 3 (index 2) đến hết (hoặc giới hạn 20 dòng để tối ưu)
                 for (let i = 2; i < Math.min(rows.length, 20); i++) {
-                    // Kiểm tra dòng có đủ cột không
                     if (rows[i] && rows[i][4] && rows[i][5]) {
-                        const nameCell = rows[i][4].trim(); // Cột E (Tên)
-                        const countCell = rows[i][5];       // Cột F (Số lượng)
-                        const count = parseInt(countCell);
-
-                        // ĐIỀU KIỆN LỌC:
-                        // 1. Số lượng phải là số (không phải chữ 'Số lượng' của header)
-                        // 2. Số lượng > 0
-                        // 3. Tên sách không được để trống
+                        const nameCell = rows[i][4].trim();
+                        const count = parseInt(rows[i][5]);
                         if (!isNaN(count) && count > 0 && nameCell !== "") {
                             validBooks.push({ name: nameCell, count: count });
                         }
                     }
                 }
-
-                // Bước 2: Sắp xếp giảm dần (đề phòng Sheet chưa sắp xếp)
                 validBooks.sort((a, b) => b.count - a.count);
-                
-                // Bước 3: Lấy Top 5
                 const top5 = validBooks.slice(0, 5);
                 let maxCount = top5.length > 0 ? top5[0].count : 0;
 
-                // Bước 4: Vẽ HTML
                 if (top5.length > 0) {
                     top5.forEach((book, index) => {
                         const widthPct = maxCount > 0 ? (book.count / maxCount) * 100 : 0;
                         const opacity = 1 - (index * 0.15); 
-
-                        const html = `
+                        bookContainer.innerHTML += `
                         <div class="group">
                             <div class="flex justify-between text-sm mb-2">
                                 <span class="font-medium text-slate-200 group-hover:text-neonBlue transition-colors truncate w-3/4">${book.name}</span>
                                 <span class="font-mono text-neonBlue">${book.count}</span>
                             </div>
                             <div class="w-full bg-slate-700/30 rounded-full h-2 overflow-hidden">
-                                <div class="bg-gradient-to-r from-neonBlue to-blue-600 h-2 rounded-full glow-bar relative group-hover:w-[${Math.min(widthPct + 5, 100)}%] transition-all duration-1000" style="width: ${widthPct}%; opacity: ${opacity}"></div>
+                                <div class="bg-gradient-to-r from-neonBlue to-blue-600 h-2 rounded-full glow-bar relative transition-all duration-1000" style="width: ${widthPct}%; opacity: ${opacity}"></div>
                             </div>
-                        </div>
-                        `;
-                        bookContainer.innerHTML += html;
+                        </div>`;
                     });
                 } else {
                      bookContainer.innerHTML = '<div class="text-center text-slate-500 py-4">Chưa có dữ liệu sách hot</div>';
                 }
 
-                // Cập nhật trạng thái
                 document.getElementById('system-status').innerText = "REALTIME CONNECTED";
-                document.getElementById('system-status').classList.remove('text-red-500');
                 document.getElementById('status-dot').classList.remove('bg-red-500');
                 document.getElementById('status-dot').classList.add('bg-neonBlue');
                 document.getElementById('status-dot-static').classList.remove('bg-red-500');
                 document.getElementById('status-dot-static').classList.add('bg-neonBlue');
-                
-                const now = new Date();
-                document.getElementById('last-update').innerText = now.toLocaleTimeString('vi-VN');
 
             } catch (error) {
                 console.error("Lỗi:", error);
-                
-                let userMessage = error.message;
-                // Nếu lỗi Fetch (do chưa Publish hoặc sai ID)
-                if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
-                    userMessage = `⚠️ LỖI TRUY CẬP:<br>
-                    1. Vào menu <b>Tệp > Chia sẻ > Công bố lên web</b>.<br>
-                    2. Chọn sheet <b>'THONG KE'</b> (hoặc Toàn bộ) và bấm <b>'Xuất bản'</b>.<br>
-                    (Lưu ý: Phải dùng tính năng 'Công bố lên web', nút Chia sẻ thường không có tác dụng với code này).`;
-                }
-
                 document.getElementById('system-status').innerText = "CONNECTION ERROR";
                 document.getElementById('system-status').classList.remove('text-neonBlue');
                 document.getElementById('system-status').classList.add('text-red-500');
-                
                 document.getElementById('status-dot').classList.remove('bg-neonBlue');
                 document.getElementById('status-dot').classList.add('bg-red-500');
-                document.getElementById('status-dot-static').classList.remove('bg-neonBlue');
-                document.getElementById('status-dot-static').classList.add('bg-red-500');
-                
-                document.getElementById('top-books-container').innerHTML = 
-                    `<div class="text-red-400 text-sm text-center border border-red-500/30 p-4 rounded bg-red-500/10">
-                        ${userMessage}
-                    </div>`;
             }
         }
 
-        // Hàm parse CSV đơn giản
         function parseCSV(str) {
             const arr = [];
             let quote = false;
             let col = 0, row = 0;
-
             for (let c = 0; c < str.length; c++) {
                 let cc = str[c], nc = str[c+1];
                 arr[row] = arr[row] || [];
                 arr[row][col] = arr[row][col] || '';
-
                 if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; }
                 else if (cc == '"') { quote = !quote; }
                 else if (cc == ',' && !quote) { ++col; }
@@ -422,39 +367,41 @@
             const el = document.getElementById(valId);
             const card = document.getElementById(cardId);
             const oldValue = parseInt(el.innerText) || 0;
-
             el.innerText = newValue;
             el.classList.remove('loading-pulse');
-
             if (newValue !== oldValue && oldValue !== 0) { 
                 card.classList.add('data-updated');
                 setTimeout(() => card.classList.remove('data-updated'), 1000);
             }
         }
 
-        // --- ĐỒNG HỒ THỜI GIAN THỰC ---
+        // --- ĐỒNG HỒ THỜI GIAN THỰC HIGH-TECH ---
         function updateClock() {
             const now = new Date();
-            const timeString = now.toLocaleTimeString('vi-VN');
+            const timeString = now.toLocaleTimeString('vi-VN', { hour12: false });
+            const dateString = now.toLocaleDateString('vi-VN', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit' 
+            });
             document.getElementById('realtime-clock').innerText = timeString;
+            document.getElementById('realtime-date').innerText = dateString;
         }
         setInterval(updateClock, 1000);
-        updateClock(); // Chạy ngay
+        updateClock();
 
-        // --- HỆ THỐNG ĐẾM NGƯỢC ---
-        let countdown = 5;
+        // --- HỆ THỐNG CẬP NHẬT NGẦM ---
         setInterval(() => {
             if (countdown <= 0) {
                 fetchData();
                 countdown = 5;
             } else {
                 countdown--;
-                document.getElementById('countdown').innerText = countdown;
             }
         }, 1000);
 
         fetchData();
-
     </script>
 </body>
 </html>
