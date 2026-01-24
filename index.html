@@ -44,7 +44,6 @@
         .glass-panel {
             background: rgba(30, 41, 59, 0.4);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -113,9 +112,17 @@
             </div>
             <h1 class="text-3xl font-bold text-white tracking-tight">THƯ VIỆN SỐ <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonBlue to-neonPurple">DASHBOARD</span></h1>
         </div>
+        
+        <!-- Khu vực Đồng hồ & Trạng thái -->
         <div class="text-right hidden md:block">
-            <div class="text-xs text-slate-400 font-mono">LAST UPDATE</div>
-            <div id="last-update" class="text-sm font-bold text-white">--:--:--</div>
+            <!-- ĐỒNG HỒ THỜI GIAN THỰC -->
+            <div id="realtime-clock" class="text-4xl font-mono font-bold text-white mb-1 tracking-widest drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">--:--:--</div>
+            
+            <div class="flex items-center justify-end gap-3 text-xs text-slate-400 font-mono">
+                <span>AUTO-REFRESH: <span id="countdown" class="text-neonBlue font-bold">5</span>s</span>
+                <span class="text-slate-600">|</span>
+                <span>DATA: <span id="last-update" class="text-slate-300">--:--:--</span></span>
+            </div>
         </div>
     </div>
 
@@ -351,7 +358,8 @@
                 }
 
                 // Cập nhật trạng thái
-                document.getElementById('system-status').innerText = "SYSTEM ONLINE";
+                document.getElementById('system-status').innerText = "REALTIME CONNECTED";
+                document.getElementById('system-status').classList.remove('text-red-500');
                 document.getElementById('status-dot').classList.remove('bg-red-500');
                 document.getElementById('status-dot').classList.add('bg-neonBlue');
                 document.getElementById('status-dot-static').classList.remove('bg-red-500');
@@ -424,8 +432,28 @@
             }
         }
 
+        // --- ĐỒNG HỒ THỜI GIAN THỰC ---
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('vi-VN');
+            document.getElementById('realtime-clock').innerText = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); // Chạy ngay
+
+        // --- HỆ THỐNG ĐẾM NGƯỢC ---
+        let countdown = 5;
+        setInterval(() => {
+            if (countdown <= 0) {
+                fetchData();
+                countdown = 5;
+            } else {
+                countdown--;
+                document.getElementById('countdown').innerText = countdown;
+            }
+        }, 1000);
+
         fetchData();
-        setInterval(fetchData, 5000); // 5s reload
 
     </script>
 </body>
