@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Thư Viện High-Tech (Light Mode)</title>
+    <title>Dashboard Thư Viện High-Tech (Transparent)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=JetBrains+Mono:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <script>
@@ -17,7 +16,6 @@
                         digital: ['Share Tech Mono', 'monospace'],
                     },
                     colors: {
-                        lightBg: '#f8fafc',
                         card: '#ffffff',
                         neonBlue: '#0891b2',
                         neonPurple: '#7c3aed',
@@ -35,62 +33,73 @@
             -moz-user-select: none;    
             -ms-user-select: none;     
         }
+        
         body {
-            background-color: #f1f5f9;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.08) 0px, transparent 50%);
-            color: #1e293b;
+            /* QUAN TRỌNG: Đặt nền trong suốt để hiện nền web của bạn */
+            background-color: transparent; 
+            /* Nếu muốn test trên file riêng lẻ thì dùng màu này: background-color: #ffffff; */
+            color: #1e293b; /* Màu chữ xám đậm Slate-800 */
         }
-        /* chat bubble */
+
+        /* Tùy chỉnh thanh cuộn cho gọn */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* CHAT BUBBLE */
          #chat-bubble { position: fixed; bottom: 24px; right: 24px; width: 60px; height: 60px; background: #4f46e5; border-radius: 50%; color: white; font-size: 26px; display: flex; align-items: center; justify-content: center; cursor: grab; box-shadow: 0 12px 30px rgba(79, 70, 229, 0.3); z-index: 9999; transition: transform 0.25s ease; } #chat-bubble:active { cursor: grabbing; transform: scale(0.95); }
         
+        /* GLASS PANEL CHO NỀN TRẮNG */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 1);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            /* Màu trắng mờ, không phải trong suốt hoàn toàn để chữ dễ đọc */
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.8); /* Viền xám rất nhạt */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
             transition: all 0.3s ease;
         }
-        /* chat box */
+
+        /* CHAT BOX */
         #chat-box { position: fixed; width: 340px; height: 430px; bottom: 100px; right: 24px; background: white; border-radius: 18px; box-shadow: 0 20px 45px rgba(0,0,0,0.15); overflow: hidden; z-index: 9999; opacity: 0; transform: scale(0.9) translateY(20px); pointer-events: none; transition: all 0.35s ease; } #chat-box.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; } #chat-box iframe { width: 100%; height: 100%; border: none; }
 
-        /* Hiệu ứng nháy khi cập nhật dữ liệu */
+        /* FLASH EFFECT KHI CẬP NHẬT */
         .data-updated {
-            border-color: #06b6d4 !important;
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2) !important;
-            background: white !important;
+            border-color: #0891b2 !important;
+            box-shadow: 0 0 15px rgba(8, 145, 178, 0.2) !important;
+            background: #ffffff !important;
         }
 
         .glow-bar {
             box-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
         }
 
-        /* Đồng hồ High-Tech UI - Light Mode */
+        /* ĐỒNG HỒ */
         .tech-clock-frame {
             position: relative;
             padding: 1rem 1.5rem;
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.2);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(148, 163, 184, 0.3);
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: inset 0 0 15px rgba(6, 182, 212, 0.05);
         }
         .tech-clock-frame::before {
             content: "";
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(6, 182, 212, 0.02) 1px, rgba(6, 182, 212, 0.02) 2px);
+            background: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0, 0, 0, 0.02) 1px, rgba(0, 0, 0, 0.02) 2px);
             pointer-events: none;
         }
         .corner-bracket {
-            position: absolute; width: 10px; height: 10px; border-color: #06b6d4; border-style: solid;
+            position: absolute; width: 10px; height: 10px; border-color: #0891b2; border-style: solid;
         }
         .cb-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
         .cb-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
         .cb-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
         .cb-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
+        /* BIỂU ĐỒ TRÒN */
         .donut-chart {
             width: 180px;
             height: 180px;
@@ -107,7 +116,7 @@
         .donut-hole {
             width: 140px;
             height: 140px;
-            background: #ffffff;
+            background: #ffffff; /* Lỗ tròn trắng */
             border-radius: 50%;
             display: flex;
             flex-direction: column;
@@ -126,14 +135,17 @@
         }
     </style>
 </head>
-<body class="p-6 min-h-screen" style="background-color: white;">
+<body class="p-6 min-h-screen font-sans">
 
+    <!-- Chat Bubble -->
     <div id="chat-bubble">🤖</div>
 
+    <!-- Chat Box -->
     <div id="chat-box">
         <iframe src="https://nkhanh208.github.io/chatbot//"></iframe>
     </div>
     
+    <!-- Header -->
     <div class="flex justify-between items-center mb-8 border-b border-slate-200 pb-6">
         <div>
             <div class="flex items-center gap-2 mb-1">
@@ -146,6 +158,7 @@
             <h1 class="text-3xl font-bold text-slate-800 tracking-tight">THƯ VIỆN SỐ <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonBlue to-neonPurple">DASHBOARD</span></h1>
         </div>
         
+        <!-- Clock -->
         <div class="text-right hidden md:block">
             <div class="tech-clock-frame">
                 <div class="corner-bracket cb-tl"></div>
@@ -155,13 +168,14 @@
                 
                 <div class="text-[10px] text-slate-400 font-mono tracking-widest uppercase mb-1 font-bold">System Time / UTC+7</div>
                 <div id="realtime-clock" class="text-5xl font-digital text-slate-800 tracking-widest leading-none">--:--:--</div>
-                <div id="realtime-date" class="text-[11px] text-slate-500 font-mono mt-2 tracking-widest border-t border-slate-100 pt-1 uppercase">--/--/----</div>
+                <div id="realtime-date" class="text-[11px] text-slate-500 font-mono mt-2 tracking-widest border-t border-slate-200 pt-1 uppercase">--/--/----</div>
             </div>
         </div>
     </div>
 
+    <!-- Scorecards -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div id="card-total" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg">
+        <div id="card-total" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg bg-white/60">
             <div class="absolute top-0 right-0 p-4 opacity-10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-neonBlue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
             </div>
@@ -170,7 +184,7 @@
             <div class="text-neonBlue text-xs mt-2 flex items-center font-mono font-bold">● Live Data</div>
         </div>
 
-        <div id="card-active" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg">
+        <div id="card-active" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg bg-white/60">
             <div class="absolute top-0 right-0 p-4 opacity-10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
             </div>
@@ -179,7 +193,7 @@
             <div class="text-amber-600 text-xs mt-2 font-mono font-bold">● Đang lưu hành</div>
         </div>
 
-        <div id="card-returned" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg">
+        <div id="card-returned" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg bg-white/60">
             <div class="absolute top-0 right-0 p-4 opacity-10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-neonGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
@@ -188,7 +202,7 @@
             <div id="percent-returned" class="text-neonGreen text-xs mt-2 font-mono font-bold">--% Hoàn thành</div>
         </div>
 
-        <div id="card-overdue" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg border-red-100">
+        <div id="card-overdue" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg border-red-100 bg-red-50/50">
              <div class="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl blur opacity-5 group-hover:opacity-10 transition duration-1000"></div>
             <div class="relative h-full flex flex-col justify-center">
                 <div class="text-red-500 text-xs font-mono uppercase tracking-wider mb-2 flex justify-between font-bold">
@@ -201,28 +215,31 @@
         </div>
     </div>
 
+    <!-- Charts Area -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="glass-panel p-6 rounded-2xl md:col-span-2">
+        <!-- Top Books -->
+        <div class="glass-panel p-6 rounded-2xl md:col-span-2 bg-white/60">
             <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
                 <h2 class="text-lg font-bold text-slate-800 flex items-center">
-                    <span class="w-1.5 h-6 bg-neonBlue mr-3 rounded-full shadow-[0_0_10px_rgba(8,145,178,0.3)]"></span>
+                    <span class="w-1.5 h-6 bg-neonBlue mr-3 rounded-full shadow-sm"></span>
                     TOP 5 SÁCH HOT 🔥
                 </h2>
-                <span class="text-[10px] font-mono text-slate-400 bg-slate-50 px-2 py-1 rounded border border-slate-100 uppercase font-bold tracking-tighter">Auto Syncing</span>
+                <span class="text-[10px] font-mono text-slate-400 bg-slate-50 px-2 py-1 rounded border border-slate-200 uppercase font-bold tracking-tighter">Auto Syncing</span>
             </div>
             <div id="top-books-container" class="space-y-6">
                 <div class="text-center text-slate-400 py-10 loading-pulse">Đang tải dữ liệu...</div>
             </div>
         </div>
 
-        <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-between">
+        <!-- Donut Chart -->
+        <div class="glass-panel p-6 rounded-2xl flex flex-col items-center justify-between bg-white/60">
             <div class="w-full border-b border-slate-100 pb-4 mb-4">
                 <h2 class="text-lg font-bold text-slate-800 flex items-center">
-                    <span class="w-1.5 h-6 bg-neonPurple mr-3 rounded-full shadow-[0_0_10px_rgba(124,58,237,0.3)]"></span>
+                    <span class="w-1.5 h-6 bg-neonPurple mr-3 rounded-full shadow-sm"></span>
                     TRẠNG THÁI
                 </h2>
             </div>
-            <div id="donut-chart-viz" class="donut-chart mb-4 border-4 border-white">
+            <div id="donut-chart-viz" class="donut-chart mb-4 border-4 border-white/50">
                 <div class="donut-hole">
                     <span id="donut-total" class="text-4xl font-bold text-slate-800 font-mono">---</span>
                     <span class="text-[10px] text-slate-400 uppercase tracking-widest mt-1 font-bold">Total Files</span>
@@ -255,7 +272,7 @@
     </div>
 
     <script>
-        /* GIỮ NGUYÊN TOÀN BỘ LOGIC JAVASCRIPT CỦA BẠN */
+        /* LOGIC JAVASCRIPT GIỮ NGUYÊN */
         const bubble = document.getElementById("chat-bubble");
         const box = document.getElementById("chat-box");
         bubble.addEventListener("click", () => { box.classList.toggle("active"); });
@@ -414,5 +431,4 @@
         fetchData();
     </script>
 </body>
-
 </html>
