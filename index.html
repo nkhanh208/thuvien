@@ -37,8 +37,7 @@
         body {
             /* QUAN TRỌNG: Đặt nền trong suốt để hiện nền web của bạn */
             background-color: transparent; 
-            /* Nếu muốn test trên file riêng lẻ thì dùng màu này: background-color: #ffffff; */
-            color: #1e293b; /* Màu chữ xám đậm Slate-800 */
+            color: #1e293b; 
         }
 
         /* Tùy chỉnh thanh cuộn cho gọn */
@@ -52,11 +51,10 @@
         
         /* GLASS PANEL CHO NỀN TRẮNG */
         .glass-panel {
-            /* Màu trắng mờ, không phải trong suốt hoàn toàn để chữ dễ đọc */
             background: rgba(255, 255, 255, 0.85); 
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(226, 232, 240, 0.8); /* Viền xám rất nhạt */
+            border: 1px solid rgba(226, 232, 240, 0.8); 
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
             transition: all 0.3s ease;
         }
@@ -173,26 +171,20 @@
         </div>
     </div>
 
-    <!-- Scorecards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div id="card-total" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg bg-white/60">
-            <div class="absolute top-0 right-0 p-4 opacity-10">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-neonBlue" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
-            </div>
-            <div class="text-slate-500 text-xs font-mono uppercase tracking-wider mb-2 font-bold">Tổng lượt mượn</div>
-            <div id="val-total" class="text-4xl font-bold text-slate-800 font-mono loading-pulse">---</div>
-            <div class="text-neonBlue text-xs mt-2 flex items-center font-mono font-bold">● Live Data</div>
-        </div>
-
+    <!-- Scorecards (Đã đổi thành grid-cols-3 để phù hợp với 3 loại dữ liệu) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        
+        <!-- Thẻ: Đang mượn -->
         <div id="card-active" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg bg-white/60">
             <div class="absolute top-0 right-0 p-4 opacity-10">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477-4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
             </div>
             <div class="text-slate-500 text-xs font-mono uppercase tracking-wider mb-2 font-bold">Đang mượn</div>
             <div id="val-active" class="text-4xl font-bold text-slate-800 font-mono loading-pulse">---</div>
             <div class="text-amber-600 text-xs mt-2 font-mono font-bold">● Đang lưu hành</div>
         </div>
 
+        <!-- Thẻ: Đã trả -->
         <div id="card-returned" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg bg-white/60">
             <div class="absolute top-0 right-0 p-4 opacity-10">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-neonGreen" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
@@ -202,6 +194,7 @@
             <div id="percent-returned" class="text-neonGreen text-xs mt-2 font-mono font-bold">--% Hoàn thành</div>
         </div>
 
+        <!-- Thẻ: Quá hạn -->
         <div id="card-overdue" class="glass-panel p-6 rounded-2xl relative overflow-hidden group hover:shadow-lg border-red-100 bg-red-50/50">
              <div class="absolute -inset-0.5 bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl blur opacity-5 group-hover:opacity-10 transition duration-1000"></div>
             <div class="relative h-full flex flex-col justify-center">
@@ -272,7 +265,7 @@
     </div>
 
     <script>
-        /* LOGIC JAVASCRIPT GIỮ NGUYÊN */
+        /* CHAT BUBBLE LOGIC */
         const bubble = document.getElementById("chat-bubble");
         const box = document.getElementById("chat-box");
         bubble.addEventListener("click", () => { box.classList.toggle("active"); });
@@ -297,31 +290,43 @@
 
         document.addEventListener("mouseup", () => { isDragging = false; });
 
-        const SHEET_ID = '1D0H2qnZmc7yw_yVbwlPOQbKqqr0Q_DMGynxDh8jV0SU'; 
-        const SHEET_GID = '1461881900'; 
-        const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${SHEET_GID}`;
+        // ===== CẬP NHẬT URL PUBLISH CSV MỚI NHẤT =====
+        // Đã bổ sung tham số "gid=1461881900" và "single=true" để BẮT BUỘC Google trả về đúng tab Thống kê
+        const URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSBheU1Zxps0sQ0DTdJtRzbaFE3Wm2g-vr8mO4GYKmr9raDtKET7xpOnnTcygnkkKGHwx7LzJBETL72/pub?gid=1461881900&single=true&output=csv';
+        
         let countdown = 5;
 
         async function fetchData() {
             try {
+                // Thêm parameter random để tránh bị trình duyệt lưu cache
                 const noCacheURL = `${URL}&_=${new Date().getTime()}`;
                 const response = await fetch(noCacheURL);
                 if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+                
+                // Lấy nội dung text thuần (CSV)
                 const text = await response.text();
+                
+                // Parse CSV thành mảng Array 2 chiều
                 const rows = parseCSV(text);
-                if (rows.length < 2) throw new Error("Bảng tính chưa có dữ liệu.");
+                if (rows.length < 2) throw new Error("Bảng tính chưa có đủ dữ liệu.");
 
+                // Row 1 (Dòng 2 trong Sheet) chứa dữ liệu mượn/trả
                 const dataRow = rows[1];
-                const total = parseInt(dataRow[0]) || 0;
+                
+                // Lấy dữ liệu Đang mượn (Cột B = index 1), Đã trả (Cột C = index 2), Quá hạn (Cột D = index 3)
                 const active = parseInt(dataRow[1]) || 0;
                 const returned = parseInt(dataRow[2]) || 0;
                 const overdue = parseInt(dataRow[3]) || 0;
+                
+                // Tự tính tổng lượt mượn để sử dụng cho biểu đồ tròn
+                const total = active + returned + overdue;
 
-                updateValueWithFlash('card-total', 'val-total', total);
+                // Cập nhật giao diện 3 thẻ
                 updateValueWithFlash('card-active', 'val-active', active);
                 updateValueWithFlash('card-returned', 'val-returned', returned);
                 updateValueWithFlash('card-overdue', 'val-overdue', overdue);
                 
+                // Biểu đồ tròn
                 document.getElementById('donut-total').innerText = total;
                 const pctReturned = total > 0 ? Math.round((returned / total) * 100) : 0;
                 const pctActive = total > 0 ? Math.round((active / total) * 100) : 0;
@@ -336,18 +341,25 @@
                 const degActive = pctReturned + pctActive;
                 document.getElementById('donut-chart-viz').style.background = `conic-gradient(#10b981 0% ${degReturned}%, #f59e0b ${degReturned}% ${degActive}%, #f43f5e ${degActive}% 100%)`;
 
+                // Cập nhật Danh sách Sách Hot
                 const bookContainer = document.getElementById('top-books-container');
                 bookContainer.innerHTML = ''; 
                 const validBooks = [];
-                for (let i = 2; i < Math.min(rows.length, 20); i++) {
-                    if (rows[i] && rows[i][4] && rows[i][5]) {
-                        const nameCell = rows[i][4].trim();
-                        const count = parseInt(rows[i][5]);
-                        if (!isNaN(count) && count > 0 && nameCell !== "") {
-                            validBooks.push({ name: nameCell, count: count });
+                
+                // Lấy dữ liệu sách hot từ Cột E (index 4) và Cột F (index 5)
+                // Chạy vòng lặp từ i = 1 (Tương ứng dòng 2 trong Sheet vì đã bỏ qua dòng Header i=0)
+                for (let i = 1; i < Math.min(rows.length, 25); i++) {
+                    const r = rows[i];
+                    if (r && r.length > 4) {
+                        const nameCell = r[4] ? r[4].trim() : ""; 
+                        const countCell = parseInt(r[5]);         
+                        
+                        if (!isNaN(countCell) && countCell > 0 && nameCell !== "") {
+                            validBooks.push({ name: nameCell, count: countCell });
                         }
                     }
                 }
+                
                 validBooks.sort((a, b) => b.count - a.count);
                 const top5 = validBooks.slice(0, 5);
                 let maxCount = top5.length > 0 ? top5[0].count : 0;
@@ -381,6 +393,7 @@
             }
         }
 
+        // Hàm Parse dữ liệu CSV thuần túy
         function parseCSV(str) {
             const arr = [];
             let quote = false;
